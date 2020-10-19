@@ -1,6 +1,8 @@
 jenkins:
   systemMessage: "Example of configuring credentials in Jenkins"
-
+plugins:
+  - id: "blueocean-commons"
+  - id: "jaxb"
 credentials:
   system:
     domainCredentials:
