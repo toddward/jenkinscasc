@@ -21,9 +21,14 @@ credentials:
                 includes: "*.test.com"
         credentials:
           - usernamePassword:
-              scope: SYSTEM
-              id: sudo_password
-              username: root
+              scope: GLOBAL
+              id: "username"
+              username: root1
+              password: "${SUDO_PASSWORD}"
+          - usernamePassword:
+              scope: GLOBAL
+              id: "username"
+              username: root2
               password: "${SUDO_PASSWORD}"
 tool:
   git:
