@@ -8,57 +8,57 @@ credentials:
       - usernamePassword:
           description: "Git creds for Jenkins"
           id: "jenkins-git-creds"
-          password: "{AQAAABAAAAAg0WX8RXJTRRoeUWG1u9AqSEQ9pQNHedgDvlswEVKAJB7Wr+j76Q63bNjOdDgaA+Xo}"
+          password: ${PASSWORD}
           scope: GLOBAL
           username: "jenkins-user"
       - usernamePassword:
           description: "jenkinstodd-nexus-password"
           id: "jenkinstodd-nexus-password"
-          password: "{AQAAABAAAAAQ6vfr7dAiY+M01F/QKEU6G/dtB3nycMMRouadpsvYFxU=}"
+          password: ${PASSWORD}
           scope: GLOBAL
           username: "admin"
       - string:
           description: "jenkinstodd-nexus-token"
           id: "jenkinstodd-nexus-token"
           scope: GLOBAL
-          secret: "{AQAAABAAAAAQlrTT34YC9c0U7LP3GYJIjQu8VSjTG9X7ZV+Chk6Dq+8=}"
+          secret: ${PASSWORD}
       - string:
           description: "jenkinstodd-npm-token"
           id: "jenkinstodd-npm-token"
           scope: GLOBAL
-          secret: "{AQAAABAAAAAQlHxZ5cVQmx2bV1Q8jwU8SjQoQKynfqu5izXwbjfk75E=}"
+          secret: ${PASSWORD}
       - string:
           description: "jenkinstodd-quay-token"
           id: "jenkinstodd-quay-token"
           scope: GLOBAL
-          secret: "{AQAAABAAAAAQOatB7vIbOkCin0arnC4eggjsH4Xi2UxUT322bKxCUoo=}"
+          secret: ${PASSWORD}
       - string:
           description: "jenkinstodd-sonarqube"
           id: "jenkinstodd-sonarqube"
           scope: GLOBAL
-          secret: "{AQAAABAAAAAQl+F72gbro0kbwoiEXzjCtzIwPeGWSPM/zn0GWKILSO8=}"
+          secret: ${PASSWORD}
       - usernamePassword:
           description: "jenkinstodd-twistlock"
           id: "jenkinstodd-twistlock"
-          password: "{AQAAABAAAAAQFxK9Am7WrHFGHJScagDa1zOkZo9DySHyjfJ335JgCnc=}"
+          password: ${PASSWORD}
           scope: GLOBAL
           username: "admin"
       - string:
           description: "jenkinstodd-twistlock-server-address"
           id: "jenkinstodd-twistlock-server-address"
           scope: GLOBAL
-          secret: "{AQAAABAAAAAQsPjBMmhWzZN4BvCIIkIuuwHUjgUNAwPZQP6hH4ZbOYE=}"
+          secret: ${PASSWORD}
       - gitLabApiTokenImpl:
-          apiToken: "{AQAAABAAAAAgSjF/Qd50gaQxvSQ5zL9vOg7zmE8kUQfFtH9EoF9fi6XZ/hkj4LPt5/QBJeaQtljA}"
+          apiToken: ${PASSWORD}
           id: "a27992b9-ff8e-41a9-9516-d4cf1e0ab574"
           scope: GLOBAL
       - usernamePassword:
           id: "96e174b7-c1ca-4345-98ee-5c986e6c4f48"
-          password: "{AQAAABAAAAAQyEp1GlmjFnlEgXStY3Zjin2kU8A+oF18sWt9CyS8OsY=}"
+          password: ${PASSWORD}
           scope: GLOBAL
           username: "william.wardzinski"
       - gitLabApiTokenImpl:
-          apiToken: "{AQAAABAAAAAgCigXbhVKNcZF+W/CuOBnIObui0a+FJL9CLAzdKR/uNEdPlyQXiPryXSo793/xKJp}"
+          apiToken: ${PASSWORD}
           id: "personalaccess_todd"
           scope: GLOBAL
 jenkins:
@@ -458,11 +458,11 @@ unclassified:
     - "hudson.plugins.emailext.plugins.trigger.FailureTrigger"
     mailAccount:
       address: "address not configured yet <nobody@nowhere>"
-      smtpPassword: "{AQAAABAAAAAQB4xbhx3tx67phrDeVHFPvQxqNSoHJPFTAbvzjwL+PCc=}"
+      smtpPassword: ${PASSWORD}
     maxAttachmentSize: -1
     maxAttachmentSizeMb: -1
     precedenceBulk: false
-    smtpPassword: "{AQAAABAAAAAQB4xbhx3tx67phrDeVHFPvQxqNSoHJPFTAbvzjwL+PCc=}"
+    smtpPassword: ${PASSWORD}
     watchingEnabled: false
   gitHubConfiguration:
     apiRateLimitChecker: ThrottleForNormalize
