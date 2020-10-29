@@ -10,6 +10,21 @@ jenkins:
   slaveAgentPort: 50000
   agentProtocols:
     - "jnlp2"
+credentials:
+  system:
+    domainCredentials:
+      - domain:
+          name: "test.com"
+          description: "test.com domain"
+          specifications:
+            - hostnameSpecification:
+                includes: "*.test.com"
+        credentials:
+          - usernamePassword:
+              scope: SYSTEM
+              id: sudo_password
+              username: root
+              password: "${SUDO_PASSWORD}"
 tool:
   git:
     installations:
