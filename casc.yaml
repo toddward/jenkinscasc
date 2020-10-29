@@ -50,3 +50,19 @@ tool:
                 - nodeJSInstaller:
                     id: "12.11.1"
                     npmPackagesRefreshHours: 48 #default is 72
+jobs:
+  - script: >
+      pipelineJob('pipeline') {
+          definition {
+              cpsScm {
+                  scriptPath 'Jenkinsfile'
+                  scm {
+                    git {
+                        remote { url 'https://github.com/mkrzyzanowski/blog-001.git' }
+                        branch '*/docker-for-mac'
+                        extensions {}
+                    }
+                  }
+              }
+          }
+      }
