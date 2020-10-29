@@ -1,31 +1,567 @@
-jenkins:
-  systemMessage: "Jenkins configured automatically by Jenkins Configuration as Code Plugin\n\n"
-  numExecutors: 5
-  scmCheckoutRetryCount: 2
-  mode: NORMAL
-  securityRealm:
-    ldap:
-      configurations:
-        - server: ldap.acme.com
-          rootDN: dc=acme,dc=fr
-          managerPasswordSecret: test
-      cache:
-        size: 100
-        ttl: 10
-      userIdStrategy: CaseSensitive
-      groupIdStrategy: CaseSensitive
 credentials:
   system:
     domainCredentials:
-      - domain :
-          name: "test.com"
-          description: "test.com domain"
-          specifications:
-            - hostnameSpecification:
-                includes: "*.test.com"
-        credentials:
-          - usernamePassword:
-              scope:    SYSTEM
-              id:       sudo_password
-              username: root
-              password: root
+    - credentials:
+      - fileSystemServiceAccountCredential:
+          id: "1a12dfa4-7fc5-47a7-aa17-cc56572a41c7"
+          scope: GLOBAL
+      - usernamePassword:
+          description: "Git creds for Jenkins"
+          id: "jenkins-git-creds"
+          password: "{AQAAABAAAAAg0WX8RXJTRRoeUWG1u9AqSEQ9pQNHedgDvlswEVKAJB7Wr+j76Q63bNjOdDgaA+Xo}"
+          scope: GLOBAL
+          username: "jenkins-user"
+      - usernamePassword:
+          description: "jenkinstodd-nexus-password"
+          id: "jenkinstodd-nexus-password"
+          password: "{AQAAABAAAAAQ6vfr7dAiY+M01F/QKEU6G/dtB3nycMMRouadpsvYFxU=}"
+          scope: GLOBAL
+          username: "admin"
+      - string:
+          description: "jenkinstodd-nexus-token"
+          id: "jenkinstodd-nexus-token"
+          scope: GLOBAL
+          secret: "{AQAAABAAAAAQlrTT34YC9c0U7LP3GYJIjQu8VSjTG9X7ZV+Chk6Dq+8=}"
+      - string:
+          description: "jenkinstodd-npm-token"
+          id: "jenkinstodd-npm-token"
+          scope: GLOBAL
+          secret: "{AQAAABAAAAAQlHxZ5cVQmx2bV1Q8jwU8SjQoQKynfqu5izXwbjfk75E=}"
+      - string:
+          description: "jenkinstodd-quay-token"
+          id: "jenkinstodd-quay-token"
+          scope: GLOBAL
+          secret: "{AQAAABAAAAAQOatB7vIbOkCin0arnC4eggjsH4Xi2UxUT322bKxCUoo=}"
+      - string:
+          description: "jenkinstodd-sonarqube"
+          id: "jenkinstodd-sonarqube"
+          scope: GLOBAL
+          secret: "{AQAAABAAAAAQl+F72gbro0kbwoiEXzjCtzIwPeGWSPM/zn0GWKILSO8=}"
+      - usernamePassword:
+          description: "jenkinstodd-twistlock"
+          id: "jenkinstodd-twistlock"
+          password: "{AQAAABAAAAAQFxK9Am7WrHFGHJScagDa1zOkZo9DySHyjfJ335JgCnc=}"
+          scope: GLOBAL
+          username: "admin"
+      - string:
+          description: "jenkinstodd-twistlock-server-address"
+          id: "jenkinstodd-twistlock-server-address"
+          scope: GLOBAL
+          secret: "{AQAAABAAAAAQsPjBMmhWzZN4BvCIIkIuuwHUjgUNAwPZQP6hH4ZbOYE=}"
+      - gitLabApiTokenImpl:
+          apiToken: "{AQAAABAAAAAgSjF/Qd50gaQxvSQ5zL9vOg7zmE8kUQfFtH9EoF9fi6XZ/hkj4LPt5/QBJeaQtljA}"
+          id: "a27992b9-ff8e-41a9-9516-d4cf1e0ab574"
+          scope: GLOBAL
+      - usernamePassword:
+          id: "96e174b7-c1ca-4345-98ee-5c986e6c4f48"
+          password: "{AQAAABAAAAAQyEp1GlmjFnlEgXStY3Zjin2kU8A+oF18sWt9CyS8OsY=}"
+          scope: GLOBAL
+          username: "william.wardzinski"
+      - gitLabApiTokenImpl:
+          apiToken: "{AQAAABAAAAAgCigXbhVKNcZF+W/CuOBnIObui0a+FJL9CLAzdKR/uNEdPlyQXiPryXSo793/xKJp}"
+          id: "personalaccess_todd"
+          scope: GLOBAL
+jenkins:
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+  authorizationStrategy:
+    globalMatrix:
+      permissions:
+      - "Agent/Configure:william.wardzinski-admin-edit-view"
+      - "Agent/Delete:william.wardzinski-admin-edit-view"
+      - "Credentials/Create:william.wardzinski-admin-edit-view"
+      - "Credentials/Delete:william.wardzinski-admin-edit-view"
+      - "Credentials/ManageDomains:william.wardzinski-admin-edit-view"
+      - "Credentials/Update:william.wardzinski-admin-edit-view"
+      - "Credentials/UseOwn:anonymous"
+      - "Credentials/View:william.wardzinski-admin-edit-view"
+      - "Gerrit/Retrigger:anonymous"
+      - "Job/Build:anonymous"
+      - "Job/Build:william.wardzinski-admin-edit-view"
+      - "Job/Cancel:anonymous"
+      - "Job/Cancel:william.wardzinski-admin-edit-view"
+      - "Job/Configure:william.wardzinski-admin-edit-view"
+      - "Job/Create:william.wardzinski-admin-edit-view"
+      - "Job/Delete:william.wardzinski-admin-edit-view"
+      - "Job/Discover:william.wardzinski-admin-edit-view"
+      - "Job/Read:william.wardzinski-admin-edit-view"
+      - "Job/Workspace:william.wardzinski-admin-edit-view"
+      - "Overall/Administer:william.wardzinski-admin-edit-view"
+      - "Overall/Read:william.wardzinski-admin-edit-view"
+      - "Overall/RunScripts:william.wardzinski-admin-edit-view"
+      - "Run/Delete:william.wardzinski-admin-edit-view"
+      - "Run/Update:william.wardzinski-admin-edit-view"
+      - "SCM/Tag:william.wardzinski-admin-edit-view"
+      - "View/Configure:william.wardzinski-admin-edit-view"
+      - "View/Create:william.wardzinski-admin-edit-view"
+      - "View/Delete:william.wardzinski-admin-edit-view"
+  clouds:
+  - kubernetes:
+      addMasterProxyEnvVars: true
+      containerCap: 100
+      containerCapStr: "100"
+      credentialsId: "1a12dfa4-7fc5-47a7-aa17-cc56572a41c7"
+      jenkinsTunnel: "172.30.7.137:50000"
+      jenkinsUrl: "http://172.30.185.104:80"
+      name: "openshift"
+      namespace: "jenkinstodd"
+      serverCertificate: |-
+        -----BEGIN CERTIFICATE-----
+        MIIC6jCCAdKgAwIBAgIBATANBgkqhkiG9w0BAQsFADAmMSQwIgYDVQQDDBtvcGVu
+        c2hpZnQtc2lnbmVyQDE1NjI3NTIxODEwHhcNMTkwNzEwMDk0OTQwWhcNMjQwNzA4
+        MDk0OTQxWjAmMSQwIgYDVQQDDBtvcGVuc2hpZnQtc2lnbmVyQDE1NjI3NTIxODEw
+        ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCx3NNatCF2gfRT8ugsaean
+        gK3rrLltn7477W9f3OohU95hUkp24GM/uT/u7aaXJaYsqn05a0U7ZnnT6qczcDuO
+        HUZCDRLyyIFFlBajyqQDVWGA/EC0FMpfMr+NaSQZjEPT3nIgRljKSSPXR9rri/Y+
+        7SOxLkjygHbHjgFduhS3myNtKylzaY0WBGEP8hpShHUXh9g2tLo5Qinqfb23ezKO
+        7jNJ8goiWeWYJzAX5UkVxzAwJAn4lmhCJDorQAg2kV+iUQ3r6CE/UlzYCVZWVJnh
+        q0DYgoqqIcKRqUEDtSbMEJXfXtbDQCZeBaY3F+LiNNwX9UxhlSU8jTuyl7Q35Oub
+        AgMBAAGjIzAhMA4GA1UdDwEB/wQEAwICpDAPBgNVHRMBAf8EBTADAQH/MA0GCSqG
+        SIb3DQEBCwUAA4IBAQBRhJgB6s3Y2ocqjTPoac9SkaCWXnyROGHnNIwkfth67bG+
+        AtndNtuB+zT3uSg1vvPVW3Y8eAdbHtKb3cAh2/nFa4nDXLyBwUt+0ivXBpLx2qEE
+        SHOZU3Wi2AvCA7U4XsVTtfpv/9N3ZLcKNDCZDFRNQ18ZJdgNTz/JRGB+4J0MQput
+        xiMxz4Vq96CEiapSqOCKLSS8K6HhNYAqZXjbdBindLP4eHPe1chuyIBLPtGzPYoN
+        a2BQYjjhN7dek29fHlqvVmbNOPEghRrqlyrCj2SWXnroyg/zB6sKiT7h/jdXOc43
+        GeuesRW4QZIXJVQI+FeFgfypwILcEjNBt2kASKYB
+        -----END CERTIFICATE-----
+      serverUrl: "https://172.30.0.1:443"
+      templates:
+      - containers:
+        - alwaysPullImage: true
+          args: "^${computer.jnlpmac} ^${computer.name}"
+          image: "registry.redhat.io/openshift3/jenkins-agent-maven-35-rhel7:v3.11"
+          name: "jnlp"
+          workingDir: "/tmp"
+        id: "7d1cda61-6c8c-464a-98a2-ba5fa3011035"
+        label: "maven"
+        name: "maven"
+        serviceAccount: "jenkins"
+        slaveConnectTimeoutStr: "0"
+        yamlMergeStrategy: "override"
+      - containers:
+        - alwaysPullImage: true
+          args: "^${computer.jnlpmac} ^${computer.name}"
+          image: "registry.redhat.io/openshift3/jenkins-agent-nodejs-8-rhel7:v3.11"
+          name: "jnlp"
+          workingDir: "/tmp"
+        id: "f7b70000-ffd2-4d1c-bfa4-f3a3febfb93a"
+        label: "nodejs"
+        name: "nodejs"
+        serviceAccount: "jenkins"
+        slaveConnectTimeoutStr: "0"
+        yamlMergeStrategy: "override"
+      - containers:
+        - alwaysPullImage: true
+          args: "^${computer.jnlpmac} ^${computer.name}"
+          image: "docker-registry.default.svc:5000/jenkinstodd/origin-jenkins-agent-maven"
+          name: "jnlp"
+          workingDir: "/tmp"
+        id: "04b6fac8-b5e8-4d0f-b038-1c5ebf05c769"
+        label: "origin-jenkins-agent-maven"
+        name: "origin-jenkins-agent-maven"
+        serviceAccount: "jenkins"
+        yamlMergeStrategy: "override"
+      - containers:
+        - alwaysPullImage: true
+          args: "^${computer.jnlpmac} ^${computer.name}"
+          image: "docker-registry.default.svc:5000/jenkinstodd/origin-jenkins-agent-maven@sha256:31be952945f4fd03621b856f09ab3cead0c85a2776e9eb9bdb51f6d9e29c5895"
+          name: "jnlp"
+          workingDir: "/tmp"
+        id: "a607542f-5e65-4533-a9df-b224ff19dafe"
+        label: "origin-jenkins-agent-maven:latest"
+        name: "origin-jenkins-agent-maven.latest"
+        serviceAccount: "jenkins"
+        yamlMergeStrategy: "override"
+      - containers:
+        - alwaysPullImage: true
+          args: "^${computer.jnlpmac} ^${computer.name}"
+          image: "docker-registry.default.svc:5000/jenkinstodd/origin-jenkins-agent-base"
+          name: "jnlp"
+          workingDir: "/tmp"
+        id: "27a3f85b-07b5-488e-acf6-1cb4cd390fcf"
+        label: "origin-jenkins-agent-base"
+        name: "origin-jenkins-agent-base"
+        serviceAccount: "jenkins"
+        yamlMergeStrategy: "override"
+      - containers:
+        - alwaysPullImage: true
+          args: "^${computer.jnlpmac} ^${computer.name}"
+          image: "quay.agilesof.com/pipeline-tools/origin-jenkins-agent-base@sha256:4310ed26e7ce1c065850c56ea3b4cca107ab4ab8bb68c762f4ce07f515979776"
+          name: "jnlp"
+          workingDir: "/tmp"
+        id: "c91fae77-3d64-43d3-a4a5-9e607e37b61d"
+        label: "origin-jenkins-agent-base:4.5"
+        name: "origin-jenkins-agent-base.4.5"
+        serviceAccount: "jenkins"
+        yamlMergeStrategy: "override"
+      - containers:
+        - alwaysPullImage: true
+          args: "^${computer.jnlpmac} ^${computer.name}"
+          image: "docker-registry.default.svc:5000/jenkinstodd/origin-jenkins-agent-base@sha256:5f222993a66d9738c91077f8e127474f5a5cf3b9f5166c0cd0594e7eb9ee428a"
+          name: "jnlp"
+          workingDir: "/tmp"
+        id: "2ea9905a-d311-458b-a0d4-7b9ee164a9d6"
+        label: "origin-jenkins-agent-base:latest"
+        name: "origin-jenkins-agent-base.latest"
+        serviceAccount: "jenkins"
+        yamlMergeStrategy: "override"
+      - containers:
+        - alwaysPullImage: true
+          args: "^${computer.jnlpmac} ^${computer.name}"
+          image: "docker-registry.default.svc:5000/jenkinstodd/jenkins-agent-mvn"
+          name: "jnlp"
+          workingDir: "/tmp"
+        id: "c222d668-2ba7-4b80-bd33-acae02e2d557"
+        label: "jenkins-agent-mvn"
+        name: "jenkins-agent-mvn"
+        serviceAccount: "jenkins"
+        yamlMergeStrategy: "override"
+      - containers:
+        - alwaysPullImage: true
+          args: "^${computer.jnlpmac} ^${computer.name}"
+          image: "docker-registry.default.svc:5000/jenkinstodd/jenkins-agent-mvn@sha256:baca24dafd511feecffd75c3e770cd0031a94ab874d9475ad539aac07c80107e"
+          name: "jnlp"
+          workingDir: "/tmp"
+        id: "fd3cd0f8-0da6-4d2d-b476-c49307eeb565"
+        label: "jenkins-agent-mvn:latest"
+        name: "jenkins-agent-mvn.latest"
+        serviceAccount: "jenkins"
+        yamlMergeStrategy: "override"
+      - containers:
+        - alwaysPullImage: true
+          args: "^${computer.jnlpmac} ^${computer.name}"
+          image: "docker-registry.default.svc:5000/jenkinstodd/jenkins-agent-npm"
+          name: "jnlp"
+          workingDir: "/tmp"
+        id: "bcf829bd-a853-467b-8d5f-28a3e1e46a69"
+        label: "jenkins-agent-npm"
+        name: "jenkins-agent-npm"
+        serviceAccount: "jenkins"
+        yamlMergeStrategy: "override"
+      - containers:
+        - alwaysPullImage: true
+          args: "^${computer.jnlpmac} ^${computer.name}"
+          image: "docker-registry.default.svc:5000/jenkinstodd/jenkins-agent-python"
+          name: "jnlp"
+          workingDir: "/tmp"
+        id: "535caf1d-a1b7-4d94-92b8-b64162087620"
+        label: "jenkins-agent-python"
+        name: "jenkins-agent-python"
+        serviceAccount: "jenkins"
+        yamlMergeStrategy: "override"
+  disableRememberMe: false
+  disabledAdministrativeMonitors:
+  - "jenkins.security.csrf.CSRFAdministrativeMonitor"
+  - "jenkins.security.QueueItemAuthenticatorMonitor"
+  - "jenkins.security.ResourceDomainRecommendation"
+  - "jenkins.security.s2m.MasterKillSwitchWarning"
+  labelAtoms:
+  - name: "jenkins-agent-mvn"
+  - name: "jenkins-agent-mvn:latest"
+  - name: "jenkins-agent-npm"
+  - name: "jenkins-agent-python"
+  - name: "master"
+  - name: "maven"
+  - name: "nodejs"
+  - name: "origin-jenkins-agent-base"
+  - name: "origin-jenkins-agent-base:4.5"
+  - name: "origin-jenkins-agent-base:latest"
+  - name: "origin-jenkins-agent-maven"
+  - name: "origin-jenkins-agent-maven:latest"
+  labelString: "master"
+  markupFormatter: "plainText"
+  mode: NORMAL
+  myViewsTabBar: "standard"
+  noUsageStatistics: true
+  numExecutors: 5
+  primaryView:
+    all:
+      name: "all"
+  projectNamingStrategy: "standard"
+  quietPeriod: 1
+  remotingSecurity:
+    enabled: false
+  scmCheckoutRetryCount: 0
+  securityRealm: "openShiftOAuth2"
+  slaveAgentPort: 50000
+  updateCenter:
+    sites:
+    - id: "default"
+      url: "https://updates.jenkins.io/update-center.json"
+  views:
+  - buildMonitor:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      - "favoriteColumn"
+      includeRegex: ".*"
+      name: "Build Monitor"
+      title: "Build Monitor"
+  - all:
+      name: "all"
+  viewsTabBar: "standard"
+security:
+  anonymizeSupportBundle:
+    enabled: false
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: false
+  sSHD:
+    port: -1
+  scriptApproval:
+    approvedSignatures:
+    - "method hudson.plugins.git.GitSCM getUserRemoteConfigs"
+    - "new java.lang.String byte[]"
+    - "staticMethod java.lang.System getenv java.lang.String"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods drop java.lang.CharSequence\
+      \ int"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods execute java.lang.String"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods minus java.lang.String"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods reverse java.lang.String"
+    - "staticMethod org.codehaus.groovy.runtime.EncodingGroovyMethods decodeBase64\
+      \ java.lang.String"
+    - "staticMethod org.codehaus.groovy.runtime.ProcessGroovyMethods getText java.lang.Process"
+unclassified:
+  ansiColorBuildWrapper:
+    colorMaps:
+    - black: "#000000"
+      blackB: "#4C4C4C"
+      blue: "#1E90FF"
+      blueB: "#4682B4"
+      cyan: "#00CDCD"
+      cyanB: "#00FFFF"
+      green: "#00CD00"
+      greenB: "#00FF00"
+      magenta: "#CD00CD"
+      magentaB: "#FF00FF"
+      name: "xterm"
+      red: "#CD0000"
+      redB: "#FF0000"
+      white: "#E5E5E5"
+      whiteB: "#FFFFFF"
+      yellow: "#CDCD00"
+      yellowB: "#FFFF00"
+    - black: "#000000"
+      blackB: "#555555"
+      blue: "#0000AA"
+      blueB: "#5555FF"
+      cyan: "#00AAAA"
+      cyanB: "#55FFFF"
+      defaultBackground: 0
+      defaultForeground: 7
+      green: "#00AA00"
+      greenB: "#55FF55"
+      magenta: "#AA00AA"
+      magentaB: "#FF55FF"
+      name: "vga"
+      red: "#AA0000"
+      redB: "#FF5555"
+      white: "#AAAAAA"
+      whiteB: "#FFFFFF"
+      yellow: "#AA5500"
+      yellowB: "#FFFF55"
+    - black: "black"
+      blackB: "black"
+      blue: "blue"
+      blueB: "blue"
+      cyan: "cyan"
+      cyanB: "cyan"
+      green: "green"
+      greenB: "green"
+      magenta: "magenta"
+      magentaB: "magenta"
+      name: "css"
+      red: "red"
+      redB: "red"
+      white: "white"
+      whiteB: "white"
+      yellow: "yellow"
+      yellowB: "yellow"
+    - black: "#2E3436"
+      blackB: "#2E3436"
+      blue: "#3465A4"
+      blueB: "#3465A4"
+      cyan: "#06989A"
+      cyanB: "#06989A"
+      defaultBackground: 0
+      defaultForeground: 7
+      green: "#4E9A06"
+      greenB: "#4E9A06"
+      magenta: "#75507B"
+      magentaB: "#75507B"
+      name: "gnome-terminal"
+      red: "#CC0000"
+      redB: "#CC0000"
+      white: "#D3D7CF"
+      whiteB: "#D3D7CF"
+      yellow: "#C4A000"
+      yellowB: "#C4A000"
+  badgePlugin:
+    disableFormatHTML: false
+  bitbucketEndpointConfiguration:
+    endpoints:
+    - bitbucketCloudEndpoint:
+        enableCache: false
+        manageHooks: false
+        repositoriesCacheDuration: 0
+        teamCacheDuration: 0
+  buildDiscarders:
+    configuredBuildDiscarders:
+    - "jobBuildDiscarder"
+  buildFailureAnalyzer:
+    doNotAnalyzeAbortedJob: false
+    gerritTriggerEnabled: true
+    globalEnabled: true
+    graphsEnabled: false
+    knowledgeBase: "localFile"
+    maxLogSize: 0
+    noCausesEnabled: true
+    noCausesMessage: "No problems were identified. If you know why this problem occurred,\
+      \ please add a suitable Cause for it."
+    nrOfScanThreads: 3
+    slackFailureCategories: "ALL"
+    slackNotifEnabled: false
+    testResultParsingEnabled: false
+  buildMonitorView:
+    permissionToCollectAnonymousUsageStatistics: true
+  claimConfig:
+    blockAutoRefreshWhileClaiming: false
+    propagateToFollowingBuildsByDefault: false
+    sendEmails: false
+    sortUsersByFullName: false
+    stickyByDefault: true
+  defaultFolderConfiguration:
+    healthMetrics:
+    - worstChildHealthMetric:
+        recursive: true
+  email-ext:
+    adminRequiredForTemplateTesting: false
+    allowUnregisteredEnabled: false
+    charset: "UTF-8"
+    debugMode: false
+    defaultBody: |-
+      $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+      Check console output at $BUILD_URL to view the results.
+    defaultContentType: "text/plain"
+    defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
+    defaultTriggerIds:
+    - "hudson.plugins.emailext.plugins.trigger.FailureTrigger"
+    mailAccount:
+      address: "address not configured yet <nobody@nowhere>"
+      smtpPassword: "{AQAAABAAAAAQB4xbhx3tx67phrDeVHFPvQxqNSoHJPFTAbvzjwL+PCc=}"
+    maxAttachmentSize: -1
+    maxAttachmentSizeMb: -1
+    precedenceBulk: false
+    smtpPassword: "{AQAAABAAAAAQB4xbhx3tx67phrDeVHFPvQxqNSoHJPFTAbvzjwL+PCc=}"
+    watchingEnabled: false
+  gitHubConfiguration:
+    apiRateLimitChecker: ThrottleForNormalize
+  gitHubPluginConfig:
+    hookUrl: "https://jenkins-jenkinstodd.apps.ocp-dev.agilesof.com/github-webhook/"
+  gitLabConnectionConfig:
+    connections:
+    - apiTokenId: "a27992b9-ff8e-41a9-9516-d4cf1e0ab574"
+      clientBuilderId: "autodetect"
+      connectionTimeout: 10
+      ignoreCertificateErrors: false
+      name: "agilesof_gitlab"
+      readTimeout: 10
+      url: "https://gitlab.agilesof.com/"
+  gitSCM:
+    allowSecondFetch: false
+    createAccountBasedOnEmail: false
+    disableGitToolChooser: false
+    hideCredentials: false
+    showEntireCommitSummaryInChanges: false
+    useExistingAccountWithSameEmail: false
+  globalLibraries:
+    libraries:
+    - defaultVersion: "master"
+      name: "SOCOMPipeline"
+      retriever:
+        modernSCM:
+          scm:
+            git:
+              credentialsId: "96e174b7-c1ca-4345-98ee-5c986e6c4f48"
+              id: "4d94bb1f-8ed6-4b94-af64-3e749512cbff"
+              remote: "https://gitlab.agilesof.com/agile-dagger/resources/pipeline-libraries/jenkins-global-pipeline-libraries.git"
+              traits:
+              - "gitBranchDiscovery"
+  globalNexusConfiguration:
+    instanceId: "ac577e8cfcd741bdada7b9f247f1c707"
+  globalPluginConfiguration:
+    buildConfigListInterval: 300
+    buildListInterval: 300
+    configMapListInterval: 300
+    enabled: true
+    foldersEnabled: true
+    imageStreamListInterval: 300
+    namespace: "jenkinstodd"
+    secretListInterval: 300
+  globalSettings:
+    failOnCorrupt: false
+    noAuthors: false
+    quietMode: false
+  junitTestResultStorage:
+    storage: "file"
+  location:
+    adminAddress: "address not configured yet <nobody@nowhere>"
+    url: "https://jenkins-jenkinstodd.apps.ocp-dev.agilesof.com/"
+  mailer:
+    charset: "UTF-8"
+    useSsl: false
+    useTls: false
+  mavenModuleSet:
+    localRepository: "default"
+  pollSCM:
+    pollingThreadCount: 10
+  prometheusConfiguration:
+    collectingMetricsPeriodInSeconds: 120
+    countAbortedBuilds: true
+    countFailedBuilds: true
+    countNotBuiltBuilds: true
+    countSuccessfulBuilds: true
+    countUnstableBuilds: true
+    defaultNamespace: "default"
+    fetchTestResults: true
+    jobAttributeName: "jenkins_job"
+    path: "prometheus"
+    processingDisabledBuilds: false
+    useAuthenticatedEndpoint: false
+  slackNotifier:
+    botUser: false
+    sendAsText: false
+  timestamper:
+    allPipelines: false
+    elapsedTimeFormat: "'<b>'HH:mm:ss.S'</b> '"
+    systemTimeFormat: "'<b>'HH:mm:ss'</b> '"
+  whitelist:
+    enabled: false
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
+  nodejs:
+    installations:
+    - name: "node15"
+      properties:
+      - installSource:
+          installers:
+          - nodeJSInstaller:
+              id: "15.0.1"
+              npmPackagesRefreshHours: 72
+  pythonInstallation:
+    installations:
+    - home: "/usr/bin/python2.7"
+      name: "System-CPython-2.7"
