@@ -22,13 +22,18 @@ credentials:
         credentials:
           - usernamePassword:
               scope: GLOBAL
-              id: "username"
+              id: "username1"
               username: root1
               password: "${SUDO_PASSWORD}"
           - usernamePassword:
               scope: GLOBAL
-              id: "username"
+              id: "username2"
               username: root2
+              password: "${SUDO_PASSWORD}"
+          - usernamePassword:
+              scope: GLOBAL
+              id: "username3"
+              username: root3
               password: "${SUDO_PASSWORD}"
 tool:
   git:
